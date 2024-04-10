@@ -1,7 +1,7 @@
 import os, requests
 VERIFIER_OAUTH_CLIENT_ID = os.getenv('OAUTH_APPLICATION_KEY')
 VERIFIER_OAUTH_CLIENT_SECRET = os.getenv('OAUTH_APPLICATION_SECRET')
-HOSTNAME = os.getenv('HOSTNAME')
+HOSTNAME = os.getenv('TOOL_HOSTNAME')
 META_OAUTH_AUTHORIZE_URL = 'https://meta.wikimedia.org/w/rest.php/oauth2/authorize'
 META_OAUTH_ACCESS_TOKEN_URL = 'https://meta.wikimedia.org/w/rest.php/oauth2/access_token'
 META_PROFILE_URL = 'https://meta.wikimedia.org/w/rest.php/oauth2/resource/profile'
