@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="200" version="1.1" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+	<g fill="none" stroke-linecap="square">
+		<circle cx="100" cy="100" r="50" stroke="#069" stroke-dasharray="10, 34.87989505128276" stroke-dashoffset="5" stroke-width="15">
+			<animateTransform attributeName="transform" attributeType="xml" dur="4s" from="0 100 100" repeatCount="indefinite" to="360 100 100" type="rotate"/>
+		</circle>
+		<circle cx="100" cy="100" r="20" stroke="#900" stroke-dasharray="5, 15.943951023931954" stroke-width="8">
+			<animateTransform attributeName="transform" attributeType="xml" dur="4s" from="360 100 100" repeatCount="indefinite" to="0 100 100" type="rotate"/>
+		</circle>
+	</g>
+</svg>

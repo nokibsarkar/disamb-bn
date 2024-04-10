@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>দ্ব্যর্থতা নিরসক | নকীব সরকার</title>
+    <meta name="description"
+        content="বাংলা উইকিপিডিয়ায় কোনো দ্ব্যর্থতা নিরসনকারী পাতায় সঙ্গযোগ থাকলে তা নিরসনের সরঞ্জাম">
+    <meta name="keywords" content="বাংলা উইকিপিডিয়া, দ্ব্যর্থতা নিরসক, সরঞ্জাম">
+    <meta name="author" content="Nokib Sarkar">
+    <link rel="stylesheet" href="static/style.css">
+    <script src="static/script.js"></script>
+</head>
+
+<body>
+    <header>
+        <h1>দ্ব্যর্থতা নিরসক</h1>
+    </header>
+    <div id="interactors">
+        <fieldset>
+            <legend>ভাষা</legend>
+            <select id="language" disabled>
+                <option value="bn">বাংলা (bn)</option>
+                <option value="en">English (en)</option>
+            </select>
+        </fieldset>
+        <fieldset>
+            <legend>পাতা</legend>
+            <input type="text" id="title" placeholder="দ্ব্যর্থতা নিরসনকারী পাতার নাম লিখুন" />
+            <img src="static/loading.svg" class="loading-icon" id="page-load-icon" />
+            <button id="load-button">লোড করুন</button>
+        </fieldset>
+        <fieldset>
+            <legend>কর্ম</legend>
+            {{username}} হিসেবে
+            <span id="submit-status"></span>
+            <img src="static/loading.svg" class="loading-icon" id="submit-load-icon" />
+            
+            <button id="submit">জমা দিন</button>
+        </fieldset>
+    </div>
+    <div id="content" aria-readonly disabled></div>
+    <div id="preview" class="hidden"></div>
+    <img src="static/loading.svg" class="loading-icon" id="preview-load-icon" />
+            
+    <script>
+        window.onload = function () {
+            document.getElementById('load-button').onclick = () => init({ disambiguableClass: "{{disambiguable_class}}", candidates: '{{",".join(candidates)}}'.split(","), title : "{{title}}" });
+            document.getElementById('load-button').click()
+        }
+    </script>
+</body>
+
+</html>
