@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify, render_template, redirect, make_response
 from disambi import Server
 from dotenv import load_dotenv
+import os
 from authorizer import *
 load_dotenv()
 
@@ -9,6 +10,10 @@ load_dotenv()
 
 
 app = Flask(__name__)
+@app.route('/ci')
+def ci():
+    os.system('git pull')
+    return 'CI/CD is working'
 @app.get('/api/disambiguate')
 def disambiguate_query():
     try:
