@@ -11,7 +11,9 @@ function init({ disambuiguableClass = 'disambiguable', candidates = [], language
     const submitButton = document.getElementById('submit');
     const languageSelector = document.getElementById('language');
     const titleInput = document.getElementById('title');
-    const submitStatus = document.getElementById('submit-status')
+    const submitStatus = document.getElementById('submit-status');
+    titleInput.value = title;
+            
     const url2 = "/api/disambiguate?" + qs.toString()
     pageLoadIcon.style.display = 'inline-block'
     const disambiguablesMap = {};
@@ -99,7 +101,6 @@ function init({ disambuiguableClass = 'disambiguable', candidates = [], language
             }
             contentElement.innerHTML = r.content;
             const disambiguables = document.getElementsByClassName(disambuiguableClass);
-            titleInput.value = title;
             for (const candidate of r.candidates) {
                 disambiguablesMap[candidate] = {
                     id: candidate,

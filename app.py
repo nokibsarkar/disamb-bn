@@ -35,10 +35,12 @@ def disambiguate():
         access_token = request.cookies.get(COOKIE_NAME)
         if not access_token:
             return redirect(get_login_url(request.url))
-        server = Server(language, access_token)
         username = request.cookies.get('username')
-        response = server.main(title)
-        return render_template("disambiguate.html", **response, username=username)
+        return render_template("disambiguate.html",
+                            language=language,
+                            title=title,
+                            username=username
+        )
     except:
         pass
 @app.post("/disambiguate")
