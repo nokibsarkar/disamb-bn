@@ -1,9 +1,9 @@
 from flask import Flask, request, jsonify, render_template, redirect, make_response
 from disambi import Server
 from dotenv import load_dotenv
+load_dotenv()
 import os
 from authorizer import *
-load_dotenv()
 
 
 
