@@ -2,7 +2,6 @@ function init({ disambuiguableClass = 'disambiguable', candidates = [], language
     const url = `https://${language}.wikipedia.org/w/api.php`
     const qs = new URLSearchParams({ title, language })
     const pageLoadIcon = document.getElementById('page-load-icon');
-    const csrfElement = document.getElementById('csrf');
     const loadButton = document.getElementById('load-button');
     const submitLoadIcon = document.getElementById('submit-load-icon')
     const previewLoadIcon = document.getElementById('preview-load-icon')
