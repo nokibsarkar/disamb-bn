@@ -12,6 +12,8 @@ load_dotenv()
 app = Flask(__name__)
 @app.post('/ci')
 def ci():
+    print(os.getcwd())
+    print(os.environ)
     os.system("git pull && toolforge webservice --backend=kubernetes python3.11 restart &")
     return 'CI/CD is working'
 @app.get('/api/disambiguate')
