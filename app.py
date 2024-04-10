@@ -10,7 +10,7 @@ load_dotenv()
 
 
 app = Flask(__name__)
-@app.route('/ci')
+@app.post('/ci')
 def ci():
     os.system("git pull && toolforge webservice --backend=kubernetes python3.11 restart &")
     return 'CI/CD is working'
