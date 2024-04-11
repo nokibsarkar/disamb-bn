@@ -64,7 +64,6 @@ def login_interface():
     return render_template("login.html", login_url=get_login_url())
 @app.get("/user/callback")
 def callback():
-    print("started")
     try:
         code = request.args.get("code")
         state = request.args.get("state")
