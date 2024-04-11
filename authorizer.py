@@ -13,11 +13,11 @@ def get_login_url(redirect_uri : str = '/'):
     params = {
         'response_type' : 'code',
         'client_id' : VERIFIER_OAUTH_CLIENT_ID,
-        'state' :  urllib.parse.quote_plus(redirect_uri),
+        'state' :  redirect_uri,
         'redirect_uri' : f'{HOSTNAME}/user/callback',
     }
     
-    url = endpoint + '?' + '&'.join([f"{k}={v}" for k, v in params.items()])
+    url = endpoint + '?' + '&'.join([f"{k}={urllib.parse.quote_plus(v)}" for k, v in params.items()])
     print(url)
     return url
     pass
