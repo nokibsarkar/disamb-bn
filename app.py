@@ -63,8 +63,6 @@ def login_interface():
     return render_template("login.html", login_url=get_login_url())
 @app.get("/user/callback")
 def callback():
-    with open('log.txt', 'a') as f:
-        f.write(str(request.args))
     try:
         code = request.args.get("code")
         state = request.args.get("state")
