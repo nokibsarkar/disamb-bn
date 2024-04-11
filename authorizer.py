@@ -11,7 +11,7 @@ def get_login_url(redirect_uri : str = '/'):
     params = {
         'response_type' : 'code',
         'client_id' : VERIFIER_OAUTH_CLIENT_ID,
-        'state' : redirect_uri,
+        'state' : '/',# redirect_uri,
         'redirect_uri' : f'{HOSTNAME}/user/callback',
     }
     return endpoint + '?' + '&'.join([f"{k}={v}" for k, v in params.items()])
