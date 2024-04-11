@@ -13,11 +13,12 @@ def get_login_url(redirect_uri : str = '/'):
     params = {
         'response_type' : 'code',
         'client_id' : VERIFIER_OAUTH_CLIENT_ID,
-        'state' :  urllib.parse.quote(redirect_uri),
+        'state' :  urllib.parse.quote_plus(redirect_uri),
         'redirect_uri' : f'{HOSTNAME}/user/callback',
     }
     
     url = endpoint + '?' + '&'.join([f"{k}={v}" for k, v in params.items()])
+    print(url)
     return url
     pass
 def get_csrf_token(language, access_token : str):
