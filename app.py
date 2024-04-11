@@ -20,6 +20,7 @@ def disambiguate_query():
         title = request.args.get("title")
         language = request.args.get("language", "bn")
         access_token = request.cookies.get(COOKIE_NAME)
+        print(access_token)
         if not access_token:
             return redirect(get_login_url(request.url))
         server = Server(language, access_token)
@@ -63,6 +64,7 @@ def login_interface():
     return render_template("login.html", login_url=get_login_url())
 @app.get("/user/callback")
 def callback():
+    print("started")
     try:
         code = request.args.get("code")
         state = request.args.get("state")
@@ -77,7 +79,7 @@ def callback():
         }
         res = requests.post(endpoint, data=params).json()
         if 'error' in res:
-            return COOKIE_NAME, '', '/error?code=' + res['error']
+            raise Exception(res['hint'])
         access_token = res['access_token']
         profile = requests.get(META_PROFILE_URL, headers={'Authorization': f'Bearer {access_token}'}).json()
         username = profile['username']
@@ -87,7 +89,6 @@ def callback():
         return redirect_response
     except Exception as e:
         return render_template("callback.html", error=e)
-    return render_template("callback.html")
 @app.get("/")
 def index():
     return render_template("index.html")
