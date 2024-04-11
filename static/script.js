@@ -95,7 +95,7 @@ function init({ disambuiguableClass = 'disambiguable', candidates = [], language
                 e.preventDefault();
                 init({
                     candidates: r.candidates,
-                    title: r.title,
+                    title: titleInput.title,
                     language: r.language
                 });
             }
