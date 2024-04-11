@@ -20,9 +20,8 @@ def disambiguate_query():
         title = request.args.get("title")
         language = request.args.get("language", "bn")
         access_token = request.cookies.get(COOKIE_NAME)
-        print(access_token)
         if not access_token:
-            return redirect(get_login_url(request.url))
+            return redirect(get_login_url(request.full_path))
         server = Server(language, access_token)
         response = server.main(title)
         return response
@@ -35,7 +34,7 @@ def disambiguate():
         language = request.args.get("language", "bn")
         access_token = request.cookies.get(COOKIE_NAME)
         if not access_token:
-            return redirect(get_login_url(request.url))
+            return redirect(get_login_url(request.full_path))
         username = request.cookies.get('username')
         return render_template("disambiguate.html",
                             language=language,
@@ -54,7 +53,7 @@ def disambiguate_post():
     text = body.get("text", "")
     access_token = request.cookies.get(COOKIE_NAME)
     if not access_token:
-        return redirect(get_login_url(request.url))
+        return redirect(get_login_url(request.full_path))
     server = Server(language, access_token)
     summary = f"দ্ব্যর্থতা নিরসক সরঞ্জামের সাহায্যে {total}টির মধ্যে {fixed}টি দ্ব্যর্থতা নিরসন করা হয়েছে"
     response = server.edit(title, text, summary)
@@ -78,7 +77,6 @@ def callback():
             'client_secret' : VERIFIER_OAUTH_CLIENT_SECRET,
             'redirect_uri' : f'{HOSTNAME}/user/callback',
         }
-        print(params)
         res = requests.post(endpoint, data=params).json()
         if 'error' in res:
             raise Exception(res['hint'])
