@@ -7,6 +7,7 @@ META_OAUTH_ACCESS_TOKEN_URL = 'https://meta.wikimedia.org/w/rest.php/oauth2/acce
 META_PROFILE_URL = 'https://meta.wikimedia.org/w/rest.php/oauth2/resource/profile'
 COOKIE_NAME = 'auth'
 def get_login_url(redirect_uri : str = '/'):
+    print("Redirect URI: ", redirect_uri)
     endpoint = META_OAUTH_AUTHORIZE_URL
     params = {
         'response_type' : 'code',
