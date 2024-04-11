@@ -12,7 +12,7 @@ function init({ disambuiguableClass = 'disambiguable', candidates = [], language
     const titleInput = document.getElementById('title');
     const submitStatus = document.getElementById('submit-status');
     titleInput.value = title;
-            
+
     const url2 = "/api/disambiguate?" + qs.toString()
     pageLoadIcon.style.display = 'inline-block'
     const disambiguablesMap = {};
@@ -44,7 +44,7 @@ function init({ disambuiguableClass = 'disambiguable', candidates = [], language
         disambiguablesMap[id].preview = content;
 
     }
-    
+
     const STATE = {
         currentSelected: null,
         currentSelectedX: 0,
@@ -90,15 +90,17 @@ function init({ disambuiguableClass = 'disambiguable', candidates = [], language
     fetch(url2).then(res => res.json())
         .then(r => {
             pageLoadIcon.style.display = 'none';
+            titleInput.value = r.title;
             loadButton.onclick = e => {
                 e.preventDefault();
                 init({
                     candidates: r.candidates,
-                    title: titleInput.value,
+                    title: r.title,
                     language: r.language
                 });
             }
             contentElement.innerHTML = r.content;
+
             const disambiguables = document.getElementsByClassName(disambuiguableClass);
             for (const candidate of r.candidates) {
                 disambiguablesMap[candidate] = {
@@ -107,10 +109,10 @@ function init({ disambuiguableClass = 'disambiguable', candidates = [], language
                 }
             }
             candidates = new Set(candidates);
-            
-            
-            
-            
+
+
+
+
             for (const disamb of disambiguables) {
                 disamb.addEventListener('click', function (event) {
                     const source = event.target;
@@ -150,13 +152,18 @@ function init({ disambuiguableClass = 'disambiguable', candidates = [], language
                     credentials: 'include'
                 }).then((response) => response.json()).then((data) => {
                     submitLoadIcon.style.display = 'none';
-                    if(data.edit.result == 'Success'){
+                    if (data.edit.result == 'Success') {
                         submitStatus.innerHTML = '<i style="color:green">Success</i>';
-                        
+
                     } else {
                         submitStatus.innerHTML = '<i style="color:red">Error</i>';
                     }
-                    setTimeout(() => submitStatus.innerHTML = "", 5000);
+                    setTimeout(() => {
+
+                        submitStatus.innerHTML = "",
+                        titleInput.value = "";
+                        loadButton.click();
+                    }, 5000);
                 });
             };
         });

@@ -3,6 +3,7 @@ from disambi import Server
 from dotenv import load_dotenv
 load_dotenv()
 import os
+from randomizer import Disambig
 from authorizer import *
 
 
@@ -17,8 +18,11 @@ def ci():
 @app.get('/api/disambiguate')
 def disambiguate_query():
     try:
-        title = request.args.get("title")
+
         language = request.args.get("language", "bn")
+        title = request.args.get("title", )
+        if not title:
+            title = Disambig.get_disambiguation(language)
         access_token = request.cookies.get(COOKIE_NAME)
         if not access_token:
             return redirect(get_login_url(request.full_path))
@@ -30,11 +34,12 @@ def disambiguate_query():
 @app.get("/disambiguate")
 def disambiguate():
     try:
-        title = request.args.get("title", "উপজেলা")
+
         language = request.args.get("language", "bn")
+        title = request.args.get("title", Disambig.get_disambiguation(language))
         access_token = request.cookies.get(COOKIE_NAME)
         if not access_token:
-            return redirect(get_login_url(request.full_path))
+            return redirect(get_login_url(title))
         username = request.cookies.get('username')
         return render_template("disambiguate.html",
                             language=language,
@@ -46,14 +51,15 @@ def disambiguate():
 @app.post("/disambiguate")
 def disambiguate_post():
     body = request.json
-    title = body.get("title")
     language = body.get("language", "bn")
+
+    title = body.get("title")
     fixed = body.get('fixed', 0)
     total = body.get('total', 0)
     text = body.get("text", "")
     access_token = request.cookies.get(COOKIE_NAME)
     if not access_token:
-        return redirect(get_login_url(request.full_path))
+        return redirect(get_login_url(title))
     server = Server(language, access_token)
     summary = f"দ্ব্যর্থতা নিরসক সরঞ্জামের সাহায্যে {total}টির মধ্যে {fixed}টি দ্ব্যর্থতা নিরসন করা হয়েছে"
     response = server.edit(title, text, summary)
@@ -66,7 +72,9 @@ def callback():
     try:
         code = request.args.get("code")
         state = request.args.get("state")
-        redirect_uri = state
+        if not state:
+            state = Disambig.get_disambiguation("bn")
+        redirect_uri = f"/disambiguate?title={state}"
         endpoint = META_OAUTH_ACCESS_TOKEN_URL
         params = {
             'grant_type' : 'authorization_code',
